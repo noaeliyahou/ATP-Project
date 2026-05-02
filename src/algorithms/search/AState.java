@@ -25,10 +25,17 @@ public abstract class AState {
         return cameFrom;
     }
 
+    public String getState() {
+        return state;
+    }
+
+    public double getCost() {
+        return cost;
+    }
 
     @Override
     public abstract boolean equals(Object obj);
 
-//    @Override
-//    public abstract int hashCode();
+    @Override
+    public abstract int hashCode();
 }
