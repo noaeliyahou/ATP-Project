@@ -1,6 +1,6 @@
-package algoritems.search;
+package algorithms.search;
 
-public class MazeState extends AState{
+public class MazeState extends AState {
     private int row;
     private int col;
 

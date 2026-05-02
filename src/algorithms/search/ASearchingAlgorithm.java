@@ -1,4 +1,4 @@
-package algoritems.search;
+package algorithms.search;
 
 public class ASearchingAlgorithm {
 }
