@@ -15,12 +15,18 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
     // Protected so that BestFirstSearch can replace it with a PriorityQueue.
     protected Queue<AState> openList;
 
-    // Constructor that initializes the openList as a standard FIFO Queue (LinkedList)
+    /**
+     * Constructor that initializes the openList as a standard FIFO Queue (LinkedList).
+     */
     public BreadthFirstSearch() {
         this.openList = new LinkedList<>();
     }
 
-    // The main search logic that explores the searchable domain to find the goal state
+    /**
+     * The main search logic that explores the searchable domain to find the goal state.
+     * @param domain the searchable problem (the maze).
+     * @return a Solution object representing the path, or null if no path is found.
+     */
     @Override
     public Solution solve(ISearchable domain) {
         if (domain == null) return null;
@@ -59,7 +65,10 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
         return null;
     }
 
-    // Returns the formal name of the algorithm
+    /**
+     * Returns the formal name of the algorithm.
+     * @return "Breadth First Search".
+     */
     @Override
     public String getName() { return "Breadth First Search"; }
 

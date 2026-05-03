@@ -1,5 +1,9 @@
 package algorithms.mazeGenerators;
 
+
+/**
+ * Represents a Maze structure including its grid, dimensions, and start/goal positions.
+ */
 public class Maze {
     private int[][] grid;
     private Position startPosition;
@@ -7,6 +11,12 @@ public class Maze {
     private int rows;
     private int cols;
 
+
+    /**
+     * Constructor to initialize a maze with the given dimensions and default positions.
+     * @param rows number of rows in the maze.
+     * @param columns number of columns in the maze.
+     */
     public  Maze(int rows, int columns){
         this.rows = rows;
         this.cols = columns;
@@ -20,34 +30,52 @@ public class Maze {
         goalPosition = new Position(rows - 1, columns - 1);
     }
 
-    // Getter for rows
+    /**
+     * @return the number of rows in the maze.
+     */
     public int getRows() {
         return rows;
     }
 
-    // Getter for columns
+    /**
+     * @return the number of columns in the maze.
+     */
     public int getCols() {
         return cols;
     }
 
-    // Returns the start position of the maze
+    /**
+     * @return the starting Position of the maze.
+     */
     public Position getStartPosition() {
         return startPosition;
     }
 
-    // Returns the goal (end) position of the maze
+    /**
+     * @return the goal Position of the maze.
+     */
     public Position getGoalPosition() {
         return goalPosition;
     }
 
-    // Sets a value (0 or 1) at a specific cell
+    /**
+     * Sets a specific value at the given coordinates within the maze grid.
+     * @param row row index.
+     * @param col column index.
+     * @param value the value to set (typically 0 for path, 1 for wall).
+     */
     public void setCellValue(int row, int col, int value) {
         if (row >= 0 && row < grid.length && col >= 0 && col < grid[0].length) {
             grid[row][col] = value;
         }
     }
 
-    // Gets the value at a specific cell
+    /**
+     * Retrieves the value at the specified coordinates.
+     * @param row row index.
+     * @param col column index.
+     * @return the value at the cell, or -1 if the coordinates are out of bounds.
+     */
     public int getCellValue(int row, int col) {
         if (row >= 0 && row < grid.length && col >= 0 && col < grid[0].length) {
             return grid[row][col];
@@ -55,7 +83,10 @@ public class Maze {
         return -1; // Indicates out of bounds
     }
 
-    // Method to print the maze to the console for debugging
+    /**
+     * Prints the maze structure to the console for debugging purposes.
+     * Marks start position as 'S' and goal position as 'E'.
+     */
     public void print() {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {

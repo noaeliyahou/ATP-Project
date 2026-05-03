@@ -4,26 +4,45 @@ import algorithms.mazeGenerators.Position;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Adapter class that makes a Maze searchable by implementing the ISearchable interface.
+ */
 public class SearchableMaze implements ISearchable {
     private Maze maze;
 
+    /**
+     * Constructor for SearchableMaze.
+     * @param maze the maze to adapt.
+     */
     public SearchableMaze(Maze maze) {
         this.maze = maze;
     }
 
-    // Returns the starting position of the maze as a MazeState
+    /**
+     * Returns the starting position of the maze as a MazeState.
+     * @return the start state.
+     */
     @Override
     public AState getStartState() {
         return new MazeState(maze.getStartPosition().getRowIndex(), maze.getStartPosition().getColumnIndex());
     }
 
-    // Returns the goal position of the maze as a MazeState
+    /**
+     * Returns the goal position of the maze as a MazeState.
+     * @return the goal state.
+     */
     @Override
     public AState getGoalState() {
         return new MazeState(maze.getGoalPosition().getRowIndex(), maze.getGoalPosition().getColumnIndex());
     }
 
-    // Calculates and returns all valid neighboring states from the current state
+    /**
+     * Calculates and returns all valid neighboring states from the current state.
+     * Includes cardinal and diagonal movements.
+     * @param s the current state.
+     * @return list of possible neighbor states.
+     */
     @Override
     public List<AState> getAllPossibleStates(AState s) {
         if (s == null) return null;
@@ -73,14 +92,21 @@ public class SearchableMaze implements ISearchable {
         return neighbors;
     }
 
-    // Checks if a cell is within maze boundaries and is not a wall (0 is a path)
+    /**
+     * Checks if a cell is within maze boundaries and is not a wall.
+     * @param r row.
+     * @param c column.
+     * @return true if valid path.
+     */
     private boolean isValid(int r, int c) {
         return (r >= 0 && r < maze.getRows() &&
                 c >= 0 && c < maze.getCols() &&
                 maze.getCellValue(r, c) == 0);
     }
 
-    // Helper function to create a new state, set its parent and cost, and add it to the list
+    /**
+     * Helper function to create a new state, set its parent and cost, and add it to the list.
+     */
     private void addState(List<AState> neighbors, int r, int c, AState parent, double weight) {
         MazeState newState = new MazeState(r, c);
         newState.setCost(parent.getCost() + weight);

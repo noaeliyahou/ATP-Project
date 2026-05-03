@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
+
 /**
  * Depth First Search (DFS) algorithm.
  * This algorithm explores as far as possible along each branch before backtracking.
@@ -11,7 +12,11 @@ import java.util.Stack;
  */
 public class DepthFirstSearch extends ASearchingAlgorithm{
 
-    // The main search logic that explores the searchable domain using a Stack
+    /**
+     * The main search logic that explores the searchable domain using a Stack.
+     * @param domain the searchable problem.
+     * @return a Solution object representing the path.
+     */
     @Override
     public Solution solve(ISearchable domain) {
         if (domain == null) return null;
@@ -51,7 +56,10 @@ public class DepthFirstSearch extends ASearchingAlgorithm{
         // Return null if no path to the goal is found
         return null;
     }
-    // Returns the formal name of the algorithm
+    /**
+     * Returns the formal name of the algorithm.
+     * @return "Depth First Search".
+     */
     @Override
     public String getName() { return "Depth First Search"; }
 }
