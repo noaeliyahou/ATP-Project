@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-// MyMazeGenerator implements a maze generation algorithm based on Randomized Prim's Algorithm.
-// This algorithm creates a "spanning tree" structure, ensuring there is a single path between any two points.
+/**
+ * MyMazeGenerator implements a maze generation algorithm based on Randomized Prim's Algorithm.
+ * This algorithm creates a "spanning tree" structure, ensuring there is a single path between any two points.
+ */
 public class MyMazeGenerator extends AMazeGenerator{
 
-
-    // Generates a maze using a randomized version of Prim's algorithm.
-    // Receives rows and columns, returns a generated Maze object.
+    /**
+     * Generates a maze using a randomized version of Prim's algorithm.
+     * @param rows the number of rows in the maze.
+     * @param columns the number of columns in the maze.
+     * @return a generated Maze object with a complex path structure.
+     */
     @Override
     public Maze generate(int rows, int columns) {
         Maze maze = new Maze(rows, columns);
@@ -64,7 +69,13 @@ public class MyMazeGenerator extends AMazeGenerator{
         return maze;
     }
 
-    // Scans for neighboring walls at a distance of 2 and adds them to the frontier list.
+    /**
+     * Scans for neighboring walls at a distance of 2 and adds them to the frontier list.
+     * @param row current row coordinate.
+     * @param col current column coordinate.
+     * @param maze the maze object being processed.
+     * @param frontiers the list of potential cells to be added to the path.
+     */
     private void addFrontiers(int row, int col, Maze maze, List<int[]> frontiers) {
         // Step size of 2 is crucial to maintain walls between parallel paths
         int[][] dirs = {{0, 2}, {0, -2}, {2, 0}, {-2, 0}};
@@ -79,7 +90,13 @@ public class MyMazeGenerator extends AMazeGenerator{
         }
     }
 
-    // Finds existing path cells (0) at a distance of 2 from the given coordinate.
+    /**
+     * Finds existing path cells (0) at a distance of 2 from the given coordinate.
+     * @param row current row coordinate.
+     * @param col current column coordinate.
+     * @param maze the maze object being processed.
+     * @return a list of coordinates representing neighbor path cells.
+     */
     private List<int[]> getNeighbors(int row, int col, Maze maze) {
         List<int[]> neighbors = new ArrayList<>();
         int[][] dirs = {{0, 2}, {0, -2}, {2, 0}, {-2, 0}};

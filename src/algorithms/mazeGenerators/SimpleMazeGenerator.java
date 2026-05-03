@@ -2,11 +2,19 @@ package algorithms.mazeGenerators;
 import java.util.Random;
 
 
-// This class generates a "simple" maze by randomly distributing walls throughout the grid.
-// While it doesn't guarantee a complex structure, it ensures the start and end points are accessible.
+/**
+ * This class generates a "simple" maze by randomly distributing walls throughout the grid.
+ * While it doesn't guarantee a complex structure, it ensures the start and end points are accessible.
+ */
 public class SimpleMazeGenerator extends AMazeGenerator {
 
-    // Generates a maze by randomly assigning 0 (path) or 1 (wall) to each cell.
+    /**
+     * Generates a maze by randomly assigning 0 (path) or 1 (wall) to each cell.
+     * Ensures that start and goal positions are always set to 0.
+     * @param rows the number of rows in the maze.
+     * @param columns the number of columns in the maze.
+     * @return a Maze object with randomly distributed walls.
+     */
     @Override
     public Maze generate(int rows, int columns) {
         // Initialize a new maze with the given dimensions
