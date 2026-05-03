@@ -55,7 +55,7 @@ public class Maze {
         return -1; // Indicates out of bounds
     }
 
-    // Optional: Method to print the maze to the console for debugging
+    // Method to print the maze to the console for debugging
     public void print() {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
