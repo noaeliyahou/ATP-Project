@@ -11,16 +11,19 @@ public class SearchableMaze implements ISearchable {
         this.maze = maze;
     }
 
+    // Returns the starting position of the maze as a MazeState
     @Override
     public AState getStartState() {
         return new MazeState(maze.getStartPosition().getRowIndex(), maze.getStartPosition().getColumnIndex());
     }
 
+    // Returns the goal position of the maze as a MazeState
     @Override
     public AState getGoalState() {
         return new MazeState(maze.getGoalPosition().getRowIndex(), maze.getGoalPosition().getColumnIndex());
     }
 
+    // Calculates and returns all valid neighboring states from the current state
     @Override
     public List<AState> getAllPossibleStates(AState s) {
         if (s == null) return null;
@@ -30,11 +33,14 @@ public class SearchableMaze implements ISearchable {
         int row = mState.getRow();
         int col = mState.getCol();
 
-        // 1. קודם כל בודקים את 4 הכיוונים הישרים ושומרים את התוצאה (בלי להוסיף לרשימה עדיין)
+        // Check if cardinal directions are valid (Up, Down, Right, Left)
         boolean up = isValid(row - 1, col);
         boolean down = isValid(row + 1, col);
         boolean right = isValid(row, col + 1);
         boolean left = isValid(row, col - 1);
+
+        // Add neighbors in clockwise order starting from Up
+        // Costs: Straight = 10, Diagonal = 15
 
         // 1: Up
         if (up) addState(neighbors, row - 1, col, s, 10);
@@ -67,17 +73,14 @@ public class SearchableMaze implements ISearchable {
         return neighbors;
     }
 
-    /**
-     * פונקציית עזר שבודקת אם תא חוקי ואם כן מוסיפה אותו לרשימת השכנים
-     * @return true אם התא פנוי (0), כדי שנוכל להשתמש בזה לבדיקת אלכסונים
-     */
+    // Checks if a cell is within maze boundaries and is not a wall (0 is a path)
     private boolean isValid(int r, int c) {
         return (r >= 0 && r < maze.getRows() &&
                 c >= 0 && c < maze.getCols() &&
                 maze.getCellValue(r, c) == 0);
     }
 
-    // פונקציית עזר להוספה לרשימה
+    // Helper function to create a new state, set its parent and cost, and add it to the list
     private void addState(List<AState> neighbors, int r, int c, AState parent, double weight) {
         MazeState newState = new MazeState(r, c);
         newState.setCost(parent.getCost() + weight);

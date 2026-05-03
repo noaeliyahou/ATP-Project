@@ -1,26 +1,28 @@
 package algorithms.search;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Solution {
-    private List<AState> solutionPath;
+    // A list that stores the path from start to goal in order
+    private ArrayList<AState> solutionPath;
 
+    // Constructor that reconstructs the path starting from the goal state.
     public Solution(AState goalState) {
         solutionPath = new ArrayList<>();
 
-        // שחזור המסלול מהסוף להתחלה
         AState temp = goalState;
+        // Loop until we reach the start state (where 'cameFrom' is null)
         while (temp != null) {
             solutionPath.add(temp);
             temp = temp.getCameFrom(); // הולכים לאבא
         }
 
-        // הופכים את הרשימה כדי שתהיה מההתחלה לסוף
         Collections.reverse(solutionPath);
     }
 
-    public List<AState> getSolutionPath() {
+    //Returns the reconstructed path as an ArrayList.
+    public ArrayList<AState> getSolutionPath() {
         return solutionPath;
     }
 }
