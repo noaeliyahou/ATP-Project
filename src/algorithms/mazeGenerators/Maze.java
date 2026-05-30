@@ -31,6 +31,26 @@ public class Maze {
     }
 
     /**
+     * Constructor that builds a maze from a byte array.
+     */
+    public Maze(byte[] b){
+        // Extract metadata using the same order
+        this.rows = extractIntFromByteArray(b, 0);
+        this.cols = extractIntFromByteArray(b, 4);
+        this.startPosition = new Position(extractIntFromByteArray(b, 8), extractIntFromByteArray(b, 12));
+        this.goalPosition = new Position(extractIntFromByteArray(b, 16), extractIntFromByteArray(b, 20));
+
+        // Initialize grid and fill with values
+        this.grid = new int[rows][cols];
+        int index = 24;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                this.grid[i][j] = b[index++];
+            }
+        }
+    }
+
+    /**
      * @return the number of rows in the maze.
      */
     public int getRows() {
@@ -100,5 +120,52 @@ public class Maze {
             }
             System.out.println();
         }
+    }
+
+    /**
+     * Converts the maze into a byte array.
+     * Structure:
+     * [0-3] Rows, [4-7] Cols,
+     * [8-11] StartRow, [12-15] StartCol,
+     * [16-19] GoalRow, [20-23] GoalCol,
+     * [24...] Grid values
+     */
+    public byte[] toByteArray(){
+// 24 bytes for metadata (6 integers * 4 bytes each) + the grid itself
+        int metadataSize = 24;
+        byte[] result = new byte[metadataSize + (rows * cols)];
+
+        // Helper to put integers into the byte array
+        insertIntToByteArray(rows, result, 0);
+        insertIntToByteArray(cols, result, 4);
+        insertIntToByteArray(startPosition.getRowIndex(), result, 8);
+        insertIntToByteArray(startPosition.getColumnIndex(), result, 12);
+        insertIntToByteArray(goalPosition.getRowIndex(), result, 16);
+        insertIntToByteArray(goalPosition.getColumnIndex(), result, 20);
+
+        // Fill the grid values
+        int index = metadataSize;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[index++] = (byte) grid[i][j];
+            }
+        }
+        return result;
+    }
+
+    // --- Helper Methods for Integer/Byte conversion ---
+
+    private void insertIntToByteArray(int val, byte[] b, int offset) {
+        b[offset] = (byte) (val >> 24);
+        b[offset + 1] = (byte) (val >> 16);
+        b[offset + 2] = (byte) (val >> 8);
+        b[offset + 3] = (byte) val;
+    }
+
+    private int extractIntFromByteArray(byte[] b, int offset) {
+        return ((b[offset] & 0xFF) << 24) |
+                ((b[offset + 1] & 0xFF) << 16) |
+                ((b[offset + 2] & 0xFF) << 8) |
+                (b[offset + 3] & 0xFF);
     }
 }
