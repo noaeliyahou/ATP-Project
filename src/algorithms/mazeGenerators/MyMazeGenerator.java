@@ -30,8 +30,10 @@ public class MyMazeGenerator extends AMazeGenerator{
         Random random = new Random();
 
         // 2. Starting point: Pick a random cell to start the path (value 0)
-        int startRow = random.nextInt(rows);
-        int startCol = random.nextInt(columns);
+//        int startRow = random.nextInt(rows);
+//        int startCol = random.nextInt(columns);
+        int startRow = 0;
+        int startCol = 0;
         maze.setCellValue(startRow, startCol, 0);
 
         // 3. Create a list to store potential frontier cells
@@ -63,9 +65,22 @@ public class MyMazeGenerator extends AMazeGenerator{
             }
         }
         // Finalize: Explicitly ensure the defined Start and Goal positions are open paths
-        maze.setCellValue(maze.getStartPosition().getRowIndex(), maze.getStartPosition().getColumnIndex(), 0);
-        maze.setCellValue(maze.getGoalPosition().getRowIndex(), maze.getGoalPosition().getColumnIndex(), 0);
+//        maze.setCellValue(maze.getStartPosition().getRowIndex(), maze.getStartPosition().getColumnIndex(), 0);
+//        maze.setCellValue(maze.getGoalPosition().getRowIndex(), maze.getGoalPosition().getColumnIndex(), 0);
+        int goalR = rows - 1;
+        int goalC = columns - 1;
+        maze.setCellValue(goalR, goalC, 0);
 
+        // חיבור יזום של נקודת היעד לעץ אם היא נשארה מבודדת מכל עבריה בקירות
+        if ((goalR - 1 < 0 || maze.getCellValue(goalR - 1, goalC) == 1) &&
+                (goalC - 1 < 0 || maze.getCellValue(goalR, goalC - 1) == 1)) {
+
+            if (goalR - 1 >= 0) {
+                maze.setCellValue(goalR - 1, goalC, 0);
+            } else if (goalC - 1 >= 0) {
+                maze.setCellValue(goalR, goalC - 1, 0);
+            }
+        }
         return maze;
     }
 

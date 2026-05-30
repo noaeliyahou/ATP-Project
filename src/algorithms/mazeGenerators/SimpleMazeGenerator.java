@@ -30,15 +30,32 @@ public class SimpleMazeGenerator extends AMazeGenerator {
                 maze.setCellValue(i, j, val);
             }
         }
+        int currRow = maze.getStartPosition().getRowIndex();
+        int currCol = maze.getStartPosition().getColumnIndex();
+        int goalRow = maze.getGoalPosition().getRowIndex();
+        int goalCol = maze.getGoalPosition().getColumnIndex();
 
+        while (currRow != goalRow) {
+            maze.setCellValue(currRow, currCol, 0);
+            if (currRow < goalRow) currRow++;
+            else currRow--;
+        }
+        // חציבה לאורך העמודות
+        while (currCol != goalCol) {
+            maze.setCellValue(currRow, currCol, 0);
+            if (currCol < goalCol) currCol++;
+            else currCol--;
+        }
+
+        maze.setCellValue(goalRow, goalCol, 0);
         // Ensure that the start and end positions are always paths (0)
         // This guarantees the player doesn't start or end inside a wall
-        Position start = maze.getStartPosition();
-        Position end = maze.getGoalPosition();
-
-        // Manually clearing the entrance and exit points
-        maze.setCellValue(start.getRowIndex(), start.getColumnIndex(), 0);
-        maze.setCellValue(end.getRowIndex(), end.getColumnIndex(), 0);
+//        Position start = maze.getStartPosition();
+//        Position end = maze.getGoalPosition();
+//
+//        // Manually clearing the entrance and exit points
+//        maze.setCellValue(start.getRowIndex(), start.getColumnIndex(), 0);
+//        maze.setCellValue(end.getRowIndex(), end.getColumnIndex(), 0);
 
         return maze;
     }

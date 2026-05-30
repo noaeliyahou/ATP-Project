@@ -15,6 +15,11 @@ public class BestFirstSearch extends BreadthFirstSearch{
     public BestFirstSearch() {
         // Instead of a simple FIFO queue, we use a PriorityQueue (Min-Heap).
         // This ensures that the state with the lowest cumulative cost is always polled first.
+        super();
+    }
+
+    @Override
+    protected void initOpenList() {
         this.openList = new PriorityQueue<>((s1, s2) -> Double.compare(s1.getCost(), s2.getCost()));
     }
 

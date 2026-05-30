@@ -22,6 +22,10 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
         this.openList = new LinkedList<>();
     }
 
+    protected void initOpenList() {
+        this.openList = new LinkedList<>();
+    }
+
     /**
      * The main search logic that explores the searchable domain to find the goal state.
      * @param domain the searchable problem (the maze).
@@ -31,34 +35,57 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
     public Solution solve(ISearchable domain) {
         if (domain == null) return null;
 
-    // closedSet keeps track of visited states to ensure O(1) lookup and prevent cycles
+    // --- תיקון 1: איפוס הנתונים בכל ריצה מחדש ---
+        this.evaluatedNodes = 0;
+        initOpenList();
+        // closedSet keeps track of visited states to ensure O(1) lookup and prevent cycles
         Set<AState> closedSet = new HashSet<>();
         AState start = domain.getStartState();
+        AState goal = domain.getGoalState();
 
         // Adding the initial state to start the search
+        start.setCost(0);
         openList.add(start);
-        closedSet.add(start);
+        //closedSet.add(start);
 
         // Continue searching as long as there are states in the openList
         while (!openList.isEmpty()) {
             // Retrieve the next state in line (FIFO) and increment the evaluation counter
             AState currentState = openList.poll();
+
+            if (closedSet.contains(currentState)) {
+                continue;
+            }
+            closedSet.add(currentState);
             this.evaluatedNodes++;
 
             // Check if the current state is the goal
-            if (currentState.equals(domain.getGoalState())) {
+            if (currentState.equals(goal)) {
                 // Return the path reconstructed from the goal state
                 return new Solution(currentState); //
             }
 
             // Get all valid neighbors from the searchable domain
             for (AState neighbor : domain.getAllPossibleStates(currentState)) {
-                // Only process neighbors that haven't been visited yet
                 if (!closedSet.contains(neighbor)) {
-                    closedSet.add(neighbor);// Mark as visited
-                    neighbor.setCameFrom(currentState);// Set parent for path reconstruction
-                    openList.add(neighbor);// Add to queue for future evaluation
+                    // <-- שינוי קריטי 2: מניעת כפילויות/בזבוז בתור עבור Best First Search
+                    // אם השכן כבר קיים בתור, נבדוק אם הגענו אליו עכשיו בדרך זולה יותר
+                    if (openList.contains(neighbor)) {
+                        for (AState stateInList : openList) {
+                            if (stateInList.equals(neighbor) && neighbor.getCost() < stateInList.getCost()) {
+                                openList.remove(stateInList);
+                                openList.add(neighbor);
+                                break;
+                            }
+                        }
+                    } else {
+                        openList.add(neighbor);
+                    }
                 }
+                // Only process neighbors that haven't been visited yet
+//                if (!closedSet.contains(neighbor)) {
+//                    openList.add(neighbor);// Add to queue for future evaluation
+//                }
             }
         }
         // Return null if no path to the goal is found
