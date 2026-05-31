@@ -1,10 +1,11 @@
 package algorithms.search;
+import java.io.Serializable;
 
 /**
  * An abstract representation of a state in a searchable problem.
  * Holds information about the state identifier, cost, and the parent state.
  */
-public abstract class AState {
+public abstract class AState implements Serializable {
     private String state;// Unique identifier for the state
     private double cost;// Total cost accumulated to reach this specific state
     private AState cameFrom;// Reference to the previous state (parent) for path reconstruction

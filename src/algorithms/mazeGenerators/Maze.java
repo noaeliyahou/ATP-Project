@@ -1,10 +1,10 @@
 package algorithms.mazeGenerators;
 
-
+import java.io.Serializable;
 /**
  * Represents a Maze structure including its grid, dimensions, and start/goal positions.
  */
-public class Maze {
+public class Maze implements Serializable{
     private int[][] grid;
     private Position startPosition;
     private Position goalPosition;

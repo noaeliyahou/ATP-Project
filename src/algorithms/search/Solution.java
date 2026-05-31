@@ -2,11 +2,12 @@ package algorithms.search;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * Represents the solution to a searching problem, containing the path from start to goal.
  */
-public class Solution {
+public class Solution implements Serializable{
     // A list that stores the path from start to goal in order
     private ArrayList<AState> solutionPath;
 

@@ -1,5 +1,6 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
 
 /**
  * This abstract class provides a base implementation for all maze generators.

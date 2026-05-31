@@ -1,10 +1,12 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
+
 /**
  * This class represents a specific location (coordinates) within a 2D maze grid.
  * It holds the row and column indices and provides a string representation for debugging and display.
  */
-public class Position {
+public class Position implements Serializable {
     private int rowIndex;
     private int columnIndex;
 
