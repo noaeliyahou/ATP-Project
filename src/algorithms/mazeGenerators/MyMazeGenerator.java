@@ -30,8 +30,7 @@ public class MyMazeGenerator extends AMazeGenerator{
         Random random = new Random();
 
         // 2. Starting point: Pick a random cell to start the path (value 0)
-//        int startRow = random.nextInt(rows);
-//        int startCol = random.nextInt(columns);
+
         int startRow = 0;
         int startCol = 0;
         maze.setCellValue(startRow, startCol, 0);
@@ -71,7 +70,6 @@ public class MyMazeGenerator extends AMazeGenerator{
         int goalC = columns - 1;
         maze.setCellValue(goalR, goalC, 0);
 
-        // חיבור יזום של נקודת היעד לעץ אם היא נשארה מבודדת מכל עבריה בקירות
         if ((goalR - 1 < 0 || maze.getCellValue(goalR - 1, goalC) == 1) &&
                 (goalC - 1 < 0 || maze.getCellValue(goalR, goalC - 1) == 1)) {
 

@@ -7,7 +7,8 @@ import algorithms.mazeGenerators.MyMazeGenerator;
 import java.io.*;
 
 
-public class ServerStrategyGenerateMaze implements IServerStrategy {
+public class
+ServerStrategyGenerateMaze implements IServerStrategy {
     @Override
     public void serverStrategy(InputStream inFromClient, OutputStream outFromClient) {
         try {
@@ -23,8 +24,18 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
                 int cols = mazeDimensions[1];
 
                 // 3. Generate the maze using MyMazeGenerator
-                IMazeGenerator generator = new MyMazeGenerator();
-                Maze maze = generator.generate(rows, cols);
+                // Get the algorithm name from the configurations file
+                String genAlgorithm = Configurations.getInstance().getMazeGeneratingAlgorithm();
+                IMazeGenerator generator;
+
+                // Dynamically choose which generator to instantiate based on the config file
+                if ("SimpleMazeGenerator".equals(genAlgorithm)) {
+                    generator = new algorithms.mazeGenerators.SimpleMazeGenerator();
+                } else if ("EmptyMazeGenerator".equals(genAlgorithm)) {
+                    generator = new algorithms.mazeGenerators.EmptyMazeGenerator();
+                } else {
+                    generator = new MyMazeGenerator(); // Default fallback
+                }                Maze maze = generator.generate(rows, cols);
 
                 // 4. Compress the maze and send it back to the client
                 // We use our MyCompressorOutputStream (decorator) over a temporary byte stream

@@ -2,7 +2,7 @@
   <artifact type="jar" name="ATP-Project:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/ATP_Project_jar</output-path>
     <root id="archive" name="ATP-Project.jar">
-      <element id="module-output" name="ATP-Project" />
+      <element id="module-output" name="ATP-Project-PartB" />
     </root>
   </artifact>
 </component>

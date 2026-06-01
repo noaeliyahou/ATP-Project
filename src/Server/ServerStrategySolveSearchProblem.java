@@ -35,8 +35,18 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             } else {
                 // If no, solve it using our algorithms from Part A
                 SearchableMaze searchableMaze = new SearchableMaze(maze);
-                // You can choose any searching algorithm (e.g., BestFirstSearch)
-                ISearchingAlgorithm solver = new BestFirstSearch();
+                // Get the search algorithm name from the configurations file
+                String searchAlgorithm = Configurations.getInstance().getMazeSearchingAlgorithm();
+                ISearchingAlgorithm solver;
+
+                // Dynamically choose which solving algorithm to instantiate based on the config file
+                if ("BreadthFirstSearch".equals(searchAlgorithm)) {
+                    solver = new algorithms.search.BreadthFirstSearch();
+                } else if ("DepthFirstSearch".equals(searchAlgorithm)) {
+                    solver = new algorithms.search.DepthFirstSearch();
+                } else {
+                    solver = new algorithms.search.BestFirstSearch(); // Default fallback
+                }
                 solution = solver.solve(searchableMaze);
 
                 // Save the solution to a file for future use

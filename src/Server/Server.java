@@ -18,9 +18,9 @@ public class Server {
         this.listeningIntervalMS = listeningIntervalMS;
         this.strategy = strategy;
         this.stop = false;
-        // In Part B, we initialize the thread pool.
-        // We'll use a fixed pool or read the size from a config file later.
-        this.threadPool = Executors.newFixedThreadPool(5);
+        // Pull the thread pool size dynamically from the configurations
+        int poolSize = Configurations.getInstance().getThreadPoolSize();
+        this.threadPool = Executors.newFixedThreadPool(poolSize);
     }
     // This method starts the server in a new thread so it doesn't block the main program
     public void start() {

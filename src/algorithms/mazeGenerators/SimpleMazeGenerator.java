@@ -40,7 +40,6 @@ public class SimpleMazeGenerator extends AMazeGenerator {
             if (currRow < goalRow) currRow++;
             else currRow--;
         }
-        // חציבה לאורך העמודות
         while (currCol != goalCol) {
             maze.setCellValue(currRow, currCol, 0);
             if (currCol < goalCol) currCol++;
@@ -50,13 +49,6 @@ public class SimpleMazeGenerator extends AMazeGenerator {
         maze.setCellValue(goalRow, goalCol, 0);
         // Ensure that the start and end positions are always paths (0)
         // This guarantees the player doesn't start or end inside a wall
-//        Position start = maze.getStartPosition();
-//        Position end = maze.getGoalPosition();
-//
-//        // Manually clearing the entrance and exit points
-//        maze.setCellValue(start.getRowIndex(), start.getColumnIndex(), 0);
-//        maze.setCellValue(end.getRowIndex(), end.getColumnIndex(), 0);
-
         return maze;
     }
 }

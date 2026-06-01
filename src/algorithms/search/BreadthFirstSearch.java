@@ -35,7 +35,6 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
     public Solution solve(ISearchable domain) {
         if (domain == null) return null;
 
-    // --- תיקון 1: איפוס הנתונים בכל ריצה מחדש ---
         this.evaluatedNodes = 0;
         initOpenList();
         // closedSet keeps track of visited states to ensure O(1) lookup and prevent cycles
@@ -68,8 +67,6 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
             // Get all valid neighbors from the searchable domain
             for (AState neighbor : domain.getAllPossibleStates(currentState)) {
                 if (!closedSet.contains(neighbor)) {
-                    // <-- שינוי קריטי 2: מניעת כפילויות/בזבוז בתור עבור Best First Search
-                    // אם השכן כבר קיים בתור, נבדוק אם הגענו אליו עכשיו בדרך זולה יותר
                     if (openList.contains(neighbor)) {
                         for (AState stateInList : openList) {
                             if (stateInList.equals(neighbor) && neighbor.getCost() < stateInList.getCost()) {
@@ -82,10 +79,6 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
                         openList.add(neighbor);
                     }
                 }
-                // Only process neighbors that haven't been visited yet
-//                if (!closedSet.contains(neighbor)) {
-//                    openList.add(neighbor);// Add to queue for future evaluation
-//                }
             }
         }
         // Return null if no path to the goal is found

@@ -22,7 +22,7 @@ public class Solution implements Serializable{
         // Loop until we reach the start state (where 'cameFrom' is null)
         while (temp != null) {
             solutionPath.add(temp);
-            temp = temp.getCameFrom(); // הולכים לאבא
+            temp = temp.getCameFrom(); // Move to the parent state
         }
 
         Collections.reverse(solutionPath);
